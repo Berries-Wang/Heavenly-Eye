@@ -1,0 +1,45 @@
+global:
+  # The default SMTP From header field.
+  smtp_from: '1849553578@qq.com' # 发件用的邮箱地址
+  # The default SMTP smarthost used for sending emails, including port number.
+  # Port number usually is 25, or 587 for SMTP over TLS (sometimes referred to as STARTTLS).
+  # Example: smtp.example.org:587
+  smtp_smarthost: 'smtp.qq.com:465'
+  # The default hostname to identify to the SMTP server.
+  smtp_hello: 'ASUS.WEI'
+  # SMTP Auth using CRAM-MD5, LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate to the SMTP server.
+  smtp_auth_username: '1849553578@qq.com'
+  # SMTP Auth using LOGIN and PLAIN.
+  smtp_auth_password: 'cgaboluqihswbhdh'
+  smtp_require_tls: false
+  http_config: 
+    tls_config:
+      insecure_skip_verify: true  # 跳过tls校验，否则邮件无法发出
+
+# The root node of the routing tree.
+route: 
+  receiver: '109Email'
+  group_by: ['altername'] # 报警分组
+  group_wait: 10s 
+  group_interval: 10s
+  repeat_interval: 1h
+  routes:
+  - receiver: '109Email'
+    group_wait: 10s
+    match:
+      team: node
+
+# A list of notification receivers.
+receivers:
+  - name: '109Email'
+    email_configs:
+    - to: '1098519753@qq.com' 
+      send_resolved: true
+
+# A list of inhibition rules.
+inhibit_rules:
+  - source_match: 
+      severity: 'critival'
+    target_match: 
+      severity: 'warning'
+    equal: ['altername']

@@ -1,0 +1,11 @@
+groups:
+- name: ASUS_NODE
+  rules:
+  - alert: node  memory usages
+    expr: (100  - ((node_memory_MemFree_bytes + node_memory_Cached_bytes + node_memory_Buffers_bytes)/node_memory_MemTotal_bytes * 100)) > 10
+    for: 10s
+    labels:
+      severity: high
+    annotations: 
+      summary: "{{ $labels.exported_instance }}: 空间使用率异常"
+      description: "{{ $labels.exported_instance }}: 空间使用率异常，请即使处理"

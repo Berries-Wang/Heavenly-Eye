@@ -10,12 +10,11 @@
      alertmanagers:
        - static_configs:
            - targets:
-             # - alertmanager:9093
+              - 127.0.0.1:9093
    
    # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
    rule_files:
-     # - "first_rules.yml"
-     # - "second_rules.yml"
+      - "002.ALERTING_RULES/*.yml"
    
    # A scrape configuration containing exactly one endpoint to scrape:
    # Here it's Prometheus itself.
@@ -28,7 +27,7 @@
    
        static_configs:
          - targets: ["localhost:9090"]
-     - job_name: "ASUS-Node" # 监控本机(Ubuntu20.04 AMD64) , 参考: 000.Prometheus/004.NODE_EXPORTER
+     - job_name: "ASUS_Node" # 监控本机(Ubuntu20.04 AMD64) , 参考: 000.Prometheus/004.NODE_EXPORTER
        metrics_path: "/metrics"
        static_configs:
          - targets: ["localhost:9100"]
